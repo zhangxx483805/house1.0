@@ -1,0 +1,42 @@
+server:
+  port: 8089
+
+spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://192.168.56.131:3306/house?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+    username: zhangxx
+    password: Zxx483805
+    druid:
+      initial-size: 10
+      min-idle: 10
+      max-active: 200
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      test-while-idle: true
+      test-on-return: false
+      test-on-borrow: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      filter: stat,wall
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+mybatis:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: com.house.mapper
+  configuration:
+    #驼峰命名是否开启
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-executor-type: reuse
+logging:
+  file: house.log
